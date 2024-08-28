@@ -43,8 +43,8 @@ pipeline {
                             npm test
                         '''
                     }
-                    post {
-                        always {
+                    stage('Test Results') {
+                        steps {
                             junit '**/target/surefire-reports/*.xml'
                         }
                     }
