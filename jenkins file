@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NETLIFY_SITE_ID = 'bc143941-4332-448a-a97b-7e3a9cd20210'
+        NETLIFY_SITE_ID = 'PUT YOUR NETLIFY SITE ID HERE'
         NETLIFY_AUTH_TOKEN = credentials('netlify-token')
     }
 
@@ -94,6 +94,14 @@ pipeline {
             }
         }
 
+        stage('Approval') {
+            steps {
+                timeout(time: 15, unit: 'MINUTES') {
+                    input message: 'Do you wish to deploy to production?', ok: 'Yes, I am sure!'
+                }
+            }
+        }
+
         stage('Deploy prod') {
             agent {
                 docker {
@@ -121,7 +129,7 @@ pipeline {
             }
 
             environment {
-                CI_ENVIRONMENT_URL = 'https://app.netlify.com/teams/vijaybhardwaj10/sites'
+                CI_ENVIRONMENT_URL = 'PUT YOUR NETLIFY SITE URL HERE'
             }
 
             steps {
